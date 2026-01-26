@@ -16,6 +16,7 @@ stages:
  - stage: TEST
    jobs:
     - job: Installtool
+      displayName: installing required tool
       steps:
         - task: UseDotNet@2
           inputs:
