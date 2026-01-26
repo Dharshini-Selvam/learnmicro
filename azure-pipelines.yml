@@ -47,6 +47,16 @@ stages:
            inputs:
              command: 'test'
              projects: '**/*.csproj'
+
+    - job: Publish
+      displayName: Publish artifact
+      dependsOn: Test
+      steps:
+        - task: DotNetCoreCLI@2
+          inputs:
+            command: 'publish'
+            publishWebProjects: false
+            projects: '**/*.csproj'
         
 
 
