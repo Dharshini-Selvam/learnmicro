@@ -32,7 +32,7 @@ stages:
             feedsToUse: 'nugetOrg'
     - job: Build
       displayName: Building code
-      dependsOn: [Restore]     
+      dependsOn: Restore    
       steps:
         - task: DotNetCoreCLI@2
           inputs:
