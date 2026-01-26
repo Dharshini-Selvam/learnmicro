@@ -38,6 +38,15 @@ stages:
           inputs:
             command: 'build'
             projects: '**/*.csproj'
+
+    - job: Test
+      displayName: Test my code
+      dependsOn: Build
+      steps:
+         - task: DotNetCoreCLI@2
+           inputs:
+             command: 'test'
+             projects: '**/*.csproj'
         
 
 
