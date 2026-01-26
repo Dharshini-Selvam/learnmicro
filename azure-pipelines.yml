@@ -29,7 +29,7 @@ stages:
           inputs:
             command: 'restore'
             projects: '**/*.csproj'
-            feedsToUse: 'nugetOrg'
+            
     - job: Build
       displayName: Building code
       dependsOn: Restore    
