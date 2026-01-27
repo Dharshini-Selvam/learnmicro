@@ -51,6 +51,7 @@ stages:
              
 
     - job: publishcodecoverage
+      dependsOn: Test
       steps:
            - task: PublishCodeCoverageResults@2
              inputs:
