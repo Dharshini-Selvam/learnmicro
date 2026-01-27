@@ -57,7 +57,7 @@ stages:
              inputs:
                codeCoverageTool: 'cobertura'   
                summaryFileLocation: '$(System.DefaultWorkingDirectory)**//codecoverage.cobertura.xml' 
-               reportDirectory: '$(System.DeafaultWorkingDirectory)**//codecoverageReport'  
+               reportDirectory: '$(System.DefaultWorkingDirectory)**//codecoverageReport'  
     - job: Publish
       displayName: Publish artifact
       dependsOn: Test
