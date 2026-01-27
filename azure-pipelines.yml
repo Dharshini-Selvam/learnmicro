@@ -48,6 +48,14 @@ stages:
              command: 'test'
              projects: '**/*.csproj'
              arguments: --collect "code coverage"
+             
+
+    - job: publishcodecoverage
+      steps:
+           - task: PublishCodeCoverageResults@2
+             inputs:
+               codeCoverageTool: 'cobertura'   
+               summaryFileLocation: '$(System.DefaultWorkingDirectory)\\codecoverage.cobertura.xml'   
     - job: Publish
       displayName: Publish artifact
       dependsOn: Test
