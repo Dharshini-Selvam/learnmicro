@@ -56,8 +56,8 @@ stages:
            - task: PublishCodeCoverageResults@2
              inputs:
                codeCoverageTool: 'cobertura'   
-               summaryFileLocation: '$(System.DefaultWorkingDirectory)**//codecoverage.cobertura.xml' 
-               reportDirectory: '$(System.DefaultWorkingDirectory)**//codecoverageReport'  
+               summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.cobertura.xml' 
+               reportDirectory: '$(System.DefaultWorkingDirectory)//**codecoverageReport'  
     - job: Publish
       displayName: Publish artifact
       dependsOn: Test
