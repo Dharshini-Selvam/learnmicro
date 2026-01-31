@@ -5,29 +5,35 @@
 trigger:
 - master
 
-variables:
-  buildConfiguration: 'release'
-
 strategy:
   matrix:
-    linux:
+    linux6:
       imageName: "ubuntu-latest"
-    mac:
+      dotnetversion: "6.0.x"
+
+    linux8:
+      imageName: "ubuntu-latest"
+      dotnetversion: "8.0.x"
+    mac8:
       imageName: "macOS-latest"
-    windows:
-      imageName: "windows-latest"
-  maxParallel: 3
+      dotnetversion: "8.0.x"
+    mac6:
+      imageName: "macOS-latest"
+      dotnetversion: "6.0.x"
+  maxParallel: 2
 
 pool:
   vmImage: $(imageName)
 
+
+
   stages:
-    - stage: TEST
-      jobs:
-       - job: Installtool
-         displayName: installing required tool
-         steps:
-           - task: UseDotNet@2
-             inputs:
-              packageType: 'sdk'
-              version: '6.0.x'
+   - stage: TEST
+     jobs:
+      - job: Installtool
+        displayName: Install .NET SDK
+        steps:
+         - task: UseDotNet@2
+           inputs:
+           packageType: 'sdk'
+           version: $(dotnetversion)
