@@ -1,0 +1,60 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- master
+strategy:
+  matrix:
+    linux:
+      imageName: "ubuntu-latest"
+    mac:
+      imageName: "macOS-latest"
+    windows:
+      imageName: "windows-latest"
+  maxParallel: 3
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  buildConfiguration: 'release'
+
+stages:
+ - stage: TEST
+   jobs:
+    - job: Installtool
+      displayName: installing required tool
+      steps:
+        - task: UseDotNet@2
+          inputs:
+           packageType: 'sdk'
+           version: '6.0.x'
+    - job: Restore
+      displayName: restoring the nuget package from external source
+      steps:
+        - task: DotNetCoreCLI@2
+          inputs:
+            command: 'restore'
+            projects: '**/*.csproj'
+            
+    - job: Build
+      displayName: Building code
+      dependsOn: Restore    
+      steps:
+        - task: DotNetCoreCLI@2
+          inputs:
+            command: 'build'
+            projects: '**/*.csproj'
+
+    - job: Test
+      displayName: Test my code
+      dependsOn: Build
+      steps:
+         - task: DotNetCoreCLI@2
+           inputs:
+             command: 'test'
+             projects: '**/*.csproj'
+             arguments: '--collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura'
+             
