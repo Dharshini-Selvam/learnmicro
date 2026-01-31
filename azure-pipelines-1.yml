@@ -5,6 +5,9 @@
 trigger:
 - master
 
+variables:
+  buildConfiguration: 'release'
+
 strategy:
   matrix:
     linux:
@@ -18,17 +21,13 @@ strategy:
 pool:
   vmImage: $(imageName)
 
-
-
   stages:
-   - stage: TEST
-     jobs:
-      - job: Installtool
-        displayName: Install .NET SDK
-        steps:
-         - task: UseDotNet@2
-           inputs:
-           packageType: 'sdk'
-           version: '6.0.x'
-
-  
+    - stage: TEST
+      jobs:
+       - job: Installtool
+         displayName: installing required tool
+         steps:
+           - task: UseDotNet@2
+             inputs:
+              packageType: 'sdk'
+              version: '6.0.x'
